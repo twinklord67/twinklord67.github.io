@@ -1,126 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>To My Love</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To My Love</title>
+<style>
+body {
+    background: #fff0f5; /* very light pink */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 40px;
+    color: #333;
+    margin: 0;
+    min-height: 100vh;
+}
 
-  <style>
-    body {
-      background: #fff0f5;          /* very light pink */
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 40px;
-      color: #333;
-      margin: 0;
-      min-height: 100vh;
-    }
+h1 {
+    color: #e91e63;
+    font-size: 3.5em;
+    margin: 20px 0 10px;
+}
 
-    h1 {
-      color: #e91e63;
-      font-size: 3.5em;
-      margin: 20px 0 10px;
-    }
+.heart {
+    color: #e91e63;
+    font-size: 1.4em;
+}
 
-    .heart {
-      color: #e91e63;
-      font-size: 1.4em;
-    }
+p {
+    line-height: 1.6;
+}
 
-    p {
-      line-height: 1.6;
-    }
+.ready-btn {
+    display: inline-block;
+    padding: 18px 50px;
+    font-size: 1.6em;
+    font-weight: bold;
+    background: #ff69b4;
+    color: white;
+    border-radius: 999px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
+    transition: all 0.3s ease;
+    margin: 60px 0 100px;
+}
 
-    .ready-btn {
-      display: inline-block;
-      padding: 18px 50px;
-      font-size: 1.6em;
-      font-weight: bold;
-      background: #ff69b4;
-      color: white;
-      border-radius: 999px;
-      text-decoration: none;
-      box-shadow: 0 6px 20px rgba(255, 105, 180, 0.5);
-      transition: all 0.3s ease;
-      margin: 60px 0 100px;
-    }
+.ready-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.7);
+}
 
-    .ready-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.7);
-    }
+.ready-btn span {
+    font-size: 1.4em;
+}
 
-    .ready-btn span {
-      font-size: 1.4em;
-    }
+/* Transition overlay & falling hearts */
+#transition-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #ffe4ec; /* slightly stronger pink so hearts are visible */
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
 
-    /* Transition overlay & falling hearts */
-    #transition-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #ffe4ec;          /* slightly stronger pink so hearts are visible */
-      z-index: 9999;
-      opacity: 0;
-      transition: opacity 0.6s ease;
-    }
-
-    @keyframes fall {
-      to {
+@keyframes fall {
+    to {
         transform: translateY(110vh) rotate(360deg);
         opacity: 0;
-      }
     }
-  </style>
+}
+</style>
 </head>
 <body>
 
-  <h1>Happy Valentine's Day, my tiny dumbass! <span class="heart">❤️</span></h1>
+<h1>Happy Valentine's Day, my tiny dumbass! <span class="heart">❤️</span></h1>
 
-  <p style="font-size: 1.4em; margin: 40px 0;">
+<p style="font-size: 1.4em; margin: 40px 0;">
     This is stupid<br>
     I know I've made apps for you before but this one's so stupid<br>
     because you're my favorite person in the world.
-  </p>
+</p>
 
-  <p style="font-size: 1.2em; color: #555; margin-bottom: 60px;">
+<p style="font-size: 1.2em; color: #555; margin-bottom: 60px;">
     (this is just the beginning — we'll make it much cuter together)
-  </p>
+</p>
 
-  <a href="#" class="ready-btn" onclick="startTransition(); return false;">
+<a href="#" class="ready-btn" onclick="startTransition(); return false;">
     You ready? <span>❤️</span>
-  </a>
+</a>
 
-  <!-- Transition overlay -->
-  <div id="transition-overlay">
+<!-- Transition overlay -->
+<div id="transition-overlay">
     <div id="hearts-container" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
-  </div>
+</div>
 
-  <script>
-    function startTransition() {
-      const overlay = document.getElementById('transition-overlay');
-      overlay.style.display = 'block';
+<script>
+function startTransition() {
+    const overlay = document.getElementById('transition-overlay');
+    overlay.style.display = 'block';
 
-      // Fade in overlay
-      setTimeout(() => {
+    // Fade in overlay
+    setTimeout(() => {
         overlay.style.opacity = '1';
-      }, 10);
+    }, 10);
 
-      // Start falling hearts
-      createFallingHearts(35); // you can change this number
+    // Start falling hearts
+    createFallingHearts(35); // number of hearts
 
-      // Go to next page after animation time
-      setTimeout(() => {
+    // Go to next page after animation
+    setTimeout(() => {
         window.location.href = 'questions.html';
-      }, 1800);
-    }
+    }, 1800);
+}
 
-    function createFallingHearts(count) {
-      const container = document.getElementById('hearts-container');
+function createFallingHearts(count) {
+    const container = document.getElementById('hearts-container');
 
-      for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count; i++) {
         const heart = document.createElement('div');
-        heart.innerHTML = ['❤️', '💗', '💖', '💕'][Math.floor(Math.random() * 4)]; // variety
+        heart.innerHTML = ['❤️', '💗', '💖', '💕'][Math.floor(Math.random() * 4)];
         heart.style.position = 'absolute';
         heart.style.left = Math.random() * 100 + 'vw';
         heart.style.top = '-10vh';
@@ -132,9 +131,9 @@
         container.appendChild(heart);
 
         heart.addEventListener('animationend', () => heart.remove());
-      }
     }
-  </script>
+}
+</script>
 
 </body>
 </html>
