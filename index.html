@@ -17,7 +17,7 @@
     }
 
     h1 {
-      color: #e91e63;              /* hot pink */
+      color: #e91e63;
       font-size: 3.5em;
       margin: 20px 0 10px;
     }
@@ -31,7 +31,6 @@
       line-height: 1.6;
     }
 
-    /* Button styles */
     .ready-btn {
       display: inline-block;
       padding: 18px 50px;
@@ -54,6 +53,24 @@
     .ready-btn span {
       font-size: 1.4em;
     }
+
+    /* Transition overlay & falling hearts */
+    #transition-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #ffe4ec;          /* slightly stronger pink so hearts are visible */
+      z-index: 9999;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -70,10 +87,54 @@
     (this is just the beginning — we'll make it much cuter together)
   </p>
 
-  <!-- The button is here now -->
-  <a href="questions.html" class="ready-btn">
+  <a href="#" class="ready-btn" onclick="startTransition(); return false;">
     You ready? <span>❤️</span>
   </a>
+
+  <!-- Transition overlay -->
+  <div id="transition-overlay">
+    <div id="hearts-container" style="position:absolute; inset:0; pointer-events:none; overflow:hidden;"></div>
+  </div>
+
+  <script>
+    function startTransition() {
+      const overlay = document.getElementById('transition-overlay');
+      overlay.style.display = 'block';
+
+      // Fade in overlay
+      setTimeout(() => {
+        overlay.style.opacity = '1';
+      }, 10);
+
+      // Start falling hearts
+      createFallingHearts(35); // you can change this number
+
+      // Go to next page after animation time
+      setTimeout(() => {
+        window.location.href = 'questions.html';
+      }, 1800);
+    }
+
+    function createFallingHearts(count) {
+      const container = document.getElementById('hearts-container');
+
+      for (let i = 0; i < count; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = ['❤️', '💗', '💖', '💕'][Math.floor(Math.random() * 4)]; // variety
+        heart.style.position = 'absolute';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = '-10vh';
+        heart.style.fontSize = (Math.random() * 1.8 + 1.2) + 'rem';
+        heart.style.color = ['#ff69b4', '#ff1493', '#ffb6c1', '#ff85c0', '#ff4d94'][Math.floor(Math.random()*5)];
+        heart.style.opacity = Math.random() * 0.4 + 0.55;
+        heart.style.transform = `rotate(${Math.random()*80 - 40}deg)`;
+        heart.style.animation = `fall ${Math.random()*6 + 5}s linear forwards`;
+        container.appendChild(heart);
+
+        heart.addEventListener('animationend', () => heart.remove());
+      }
+    }
+  </script>
 
 </body>
 </html>
