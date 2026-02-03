@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Wrapped 💖</title>
+
+<style>
+body{
+margin:0;
+overflow:hidden;
+font-family:system-ui;
+background:#0f0f14;
+color:white;
+}
+
+.slider{
+display:flex;
+width:100vw;
+height:100vh;
+transition:transform .6s ease;
+}
+
+.slide{
+min-width:100vw;
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+position:relative;
+text-align:center;
+padding:30px;
+}
+
+.slide img, .slide video{
+max-width:85%;
+max-height:70%;
+border-radius:28px;
+box-shadow:0 20px 60px rgba(255,105,180,.45);
+}
+
+.text{
+font-size:2rem;
+margin-top:30px;
+animation:pop .8s ease;
+}
+
+@keyframes pop{
+from{transform:scale(.8);opacity:0}
+to{transform:scale(1);opacity:1}
+}
+
+.heart{
+position:absolute;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+from{transform:translateY(110vh)}
+to{transform:translateY(-10vh)}
+}
+
+.teddy{
+position:absolute;
+font-size:48px;
+animation:peek 3s ease;
+}
+
+@keyframes peek{
+0%{transform:scale(0)}
+50%{transform:scale(1)}
+100%{transform:scale(0)}
+}
+</style>
+</head>
+
+<body>
+
+<audio src="music/love.mp3" autoplay loop></audio>
+
+<div class="slider" id="slider">
+
+<div class="slide">
+<div class="text">
+A gay emotionally absent stupid dumb unloved orphan meets Sai  
+and boom — the earth explodes.  
+This is how it exploded 💥💖
+</div>
+</div>
+
+<div class="slide">
+<img src="images/pic1.jpg">
+<div class="text">First appearance of my baby Mrinshu 🐭💕</div>
+</div>
+
+<div class="slide">
+<img src="images/pic2.jpg">
+<div class="text">My tiny dummy being illegally cute</div>
+</div>
+
+<div class="slide">
+<video src="videos/vid1.mp4" controls></video>
+<div class="text">POV: you ruined my life beautifully</div>
+</div>
+
+<div class="slide">
+<img src="images/pic3.jpg">
+<div class="text">My love looking hot AND adorable</div>
+</div>
+
+<div class="slide">
+<img src="images/pic4.jpg">
+<div class="text">My lil king sized bed 🛏️💖</div>
+</div>
+
+<div class="slide">
+<video src="videos/vid2.mp4" controls></video>
+<div class="text">I fell harder here you rat 😭</div>
+</div>
+
+<div class="slide">
+<div class="text">
+I’d choose you in every universe.  
+Even when you’re a dumbass.  
+I love you forever my baby 💞
+</div>
+</div>
+
+</div>
+
+<script>
+let index=0;
+const slider=document.getElementById("slider");
+
+let startX=0;
+
+document.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+document.addEventListener("touchend",e=>{
+let diff=startX-e.changedTouches[0].clientX;
+if(diff>50) next();
+if(diff<-50) prev();
+});
+
+document.addEventListener("keydown",e=>{
+if(e.key==="ArrowRight") next();
+if(e.key==="ArrowLeft") prev();
+});
+
+function next(){
+if(index<slider.children.length-1){
+index++;
+update();
+}
+}
+
+function prev(){
+if(index>0){
+index--;
+update();
+}
+}
+
+function update(){
+slider.style.transform=`translateX(-${index*100}vw)`;
+spawnTeddy();
+}
+
+function spawnTeddy(){
+const t=document.createElement("div");
+t.className="teddy";
+t.innerHTML="🧸";
+t.style.left=Math.random()*80+"vw";
+t.style.top=Math.random()*70+"vh";
+document.body.appendChild(t);
+setTimeout(()=>t.remove(),3000);
+}
+
+setInterval(()=>{
+const h=document.createElement("div");
+h.className="heart";
+h.innerHTML=["💖","💕","💗","❤️"][Math.floor(Math.random()*4)];
+h.style.left=Math.random()*100+"vw";
+h.style.animationDuration=(Math.random()*4+4)+"s";
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),7000);
+},600);
+</script>
+
+</body>
+</html>
