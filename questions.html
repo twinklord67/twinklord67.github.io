@@ -1,72 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our little questions ♡</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our little questions ♡</title>
 
-<style>
-body{
-margin:0;
-padding:40px 20px;
-background:linear-gradient(135deg,#fff5fb,#ffeef4,#fff0f8);
-font-family:system-ui;
-text-align:center;
-color:#4a2c3b;
-animation:fade 1s forwards;
-}
-@keyframes fade{to{opacity:1}}
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      background: linear-gradient(135deg, #fff5fb, #ffeef4, #fff0f8);
+      font-family: system-ui;
+      text-align: center;
+      color: #4a2c3b;
+      animation: fade 1s forwards;
+    }
 
-h1{color:#ff4d94;font-size:3rem;margin-bottom:50px}
+    @keyframes fade {
+      to { opacity: 1; }
+    }
 
-.question-box{
-background:white;
-padding:32px;
-max-width:720px;
-margin:40px auto;
-border-radius:26px;
-box-shadow:0 15px 40px rgba(255,105,180,.25);
-transition:.3s;
-}
-.question-box:hover{transform:translateY(-4px)}
+    h1 {
+      color: #ff4d94;
+      font-size: 3rem;
+      margin-bottom: 50px;
+    }
 
-.input-area{margin-top:20px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+    .question-box {
+      background: white;
+      padding: 32px;
+      max-width: 720px;
+      margin: 40px auto;
+      border-radius: 26px;
+      box-shadow: 0 15px 40px rgba(255, 105, 180, 0.25);
+      transition: 0.3s;
+    }
 
-select,input,textarea{
-padding:12px 16px;
-border:2px solid #ffcce6;
-border-radius:14px;
-font-size:1.05rem;
-background:#fff8fc;
-}
+    .question-box:hover {
+      transform: translateY(-4px);
+    }
 
-button{
-padding:12px 30px;
-border:none;
-border-radius:999px;
-background:linear-gradient(135deg,#ff69b4,#ff4d94);
-color:white;
-font-size:1.1rem;
-cursor:pointer;
-box-shadow:0 4px 14px rgba(255,105,180,.4);
-}
+    .input-area {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
 
-.feedback{margin-top:16px;font-size:1.25rem;min-height:1.6em}
-.correct{color:#2ecc71}
-.wrong{color:#e74c3c}
+    select,
+    input,
+    textarea {
+      padding: 12px 16px;
+      border: 2px solid #ffcce6;
+      border-radius: 14px;
+      font-size: 1.05rem;
+      background: #fff8fc;
+    }
 
-.heart{
-position:fixed;
-font-size:18px;
-pointer-events:none;
-animation:burst 1s ease-out forwards;
-}
+    button {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff69b4, #ff4d94);
+      color: white;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(255, 105, 180, 0.4);
+    }
 
-@keyframes burst{
-0%{transform:scale(1);opacity:1}
-100%{transform:translate(var(--x),var(--y)) scale(0);opacity:0}
-}
-</style>
+    .feedback {
+      margin-top: 16px;
+      font-size: 1.25rem;
+      min-height: 1.6em;
+    }
+
+    .correct { color: #2ecc71; }
+    .wrong { color: #e74c3c; }
+
+    .heart {
+      position: fixed;
+      font-size: 18px;
+      pointer-events: none;
+      animation: burst 1s ease-out forwards;
+    }
+
+    @keyframes burst {
+      0% { transform: scale(1); opacity: 1; }
+      100% {
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -76,127 +102,197 @@ animation:burst 1s ease-out forwards;
 <audio id="music" src="music.mp3" loop></audio>
 <audio id="ding" src="ding.mp3"></audio>
 
+<!-- Question 1 -->
 <div class="question-box">
-<div>1. When did we first get married?</div>
-<div class="input-area">
-<select id="d1"><option></option><option>8</option></select>
-<select id="m1"><option></option><option>3</option></select>
-<select id="y1"><option></option><option>2025</option></select>
-<select id="h1"><option></option><option>10</option></select>
-<select id="min1"><option></option><option>23</option></select>
-<select id="ap1"><option></option><option>AM</option></select>
-<button onclick="check1()">Check</button>
-</div>
-<div id="f1" class="feedback"></div>
+  <div>1. When did we first get married?</div>
+  <div class="input-area">
+    <select id="q1-day"></select>
+    <select id="q1-month"></select>
+    <select id="q1-hour"></select>
+    <select id="q1-minute"></select>
+    <select id="q1-ampm">
+      <option value="">AM/PM</option>
+      <option>AM</option>
+      <option>PM</option>
+    </select>
+    <button onclick="checkQ1()">Check</button>
+  </div>
+  <div id="f1" class="feedback"></div>
 </div>
 
+<!-- Question 2 -->
 <div class="question-box">
-<div>2. When did we start talking?</div>
-<div class="input-area">
-<select id="d2"><option></option><option>11</option></select>
-<select id="m2"><option></option><option>2</option></select>
-<select id="y2"><option></option><option>2025</option></select>
-<button onclick="check2()">Check</button>
-</div>
-<div id="f2" class="feedback"></div>
+  <div>2. When did we start talking?</div>
+  <div class="input-area">
+    <select id="q2-day"></select>
+    <select id="q2-month"></select>
+    <button onclick="checkQ2()">Check</button>
+  </div>
+  <div id="f2" class="feedback"></div>
 </div>
 
+<!-- Question 3 -->
 <div class="question-box">
-<div>3. What did I name your left boob?</div>
-<div class="input-area">
-<input id="q3">
-<button onclick="check3()">Check</button>
-</div>
-<div id="f3" class="feedback"></div>
+  <div>3. What did I name your left boob?</div>
+  <div class="input-area">
+    <input id="q3" />
+    <button onclick="checkQ3()">Check</button>
+  </div>
+  <div id="f3" class="feedback"></div>
 </div>
 
+<!-- Question 4 -->
 <div class="question-box">
-<div>4. How long is my pp?</div>
-<div class="input-area">
-<input type="number" id="q4" step="0.1">
-<button onclick="check4()">Check</button>
-</div>
-<div id="f4" class="feedback"></div>
+  <div>4. How long is my pp?</div>
+  <div class="input-area">
+    <input type="number" id="q4" step="0.1" />
+    <button onclick="checkQ4()">Check</button>
+  </div>
+  <div id="f4" class="feedback"></div>
 </div>
 
+<!-- Question 5 -->
 <div class="question-box">
-<div>5. How bad do you want me?</div>
-<div class="input-area" style="flex-direction:column">
-<textarea id="q5" rows="4" style="width:90%"></textarea>
-<button onclick="check5()">Submit ♡</button>
-</div>
-<div id="f5" class="feedback"></div>
+  <div>5. How bad do you want me?</div>
+  <div class="input-area" style="flex-direction: column;">
+    <textarea id="q5" rows="4" style="width: 90%;"></textarea>
+    <button onclick="checkQ5()">Submit ♡</button>
+  </div>
+  <div id="f5" class="feedback"></div>
 </div>
 
 <script>
-let correctCount=0;
+  let correctCount = 0;
 
-const music=document.getElementById("music");
-music.volume=0.2;
-music.play().catch(()=>{});
+  const music = document.getElementById("music");
+  music.volume = 0.2;
+  music.play().catch(() => {});
 
-function burst(x,y){
-for(let i=0;i<14;i++){
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML="💖";
-h.style.left=x+"px";
-h.style.top=y+"px";
-h.style.setProperty("--x",(Math.random()*200-100)+"px");
-h.style.setProperty("--y",(Math.random()*-200)+"px");
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),1000);
-}
-}
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
 
-function reward(el){
-document.getElementById("ding").play();
-const r=el.getBoundingClientRect();
-burst(r.left+r.width/2,r.top);
-}
+  function fillOptions() {
 
-function winCheck(){
-if(correctCount===5){
-setTimeout(()=>location.href="final.html",1200);
-}
-}
+    const daySelects = [q1-day, q2-day];
+    const monthSelects = [q1-month, q2-month];
 
-function check1(){
-if(d1.value==8&&m1.value==3&&y1.value==2025&&h1.value==10&&min1.value==23&&ap1.value=="AM"){
-f1.innerHTML="<span class='correct'>Perfect </span>";
-reward(f1);correctCount++;winCheck();
-}else f1.innerHTML="<span class='wrong'>Try again cutie</span>";
-}
+    daySelects.forEach(sel => {
+      sel.innerHTML = "<option value=''>Day</option>";
+      for (let i = 1; i <= 31; i++) {
+        sel.innerHTML += `<option value="${i}">${i}</option>`;
+      }
+    });
 
-function check2(){
-if(d2.value==11&&m2.value==2&&y2.value==2025){
-f2.innerHTML="<span class='correct'>Yess ♡</span>";
-reward(f2);correctCount++;winCheck();
-}else f2.innerHTML="<span class='wrong'>Nope</span>";
-}
+    monthSelects.forEach(sel => {
+      sel.innerHTML = "<option value=''>Month</option>";
+      months.forEach((m, i) => {
+        sel.innerHTML += `<option value="${i + 1}">${m}</option>`;
+      });
+    });
 
-function check3(){
-if(q3.value.toLowerCase().includes("sponge")){
-f3.innerHTML="<span class='correct'>Spongeboob </span>";
-reward(f3);correctCount++;winCheck();
-}else f3.innerHTML="<span class='wrong'>Wrong</span>";
-}
+    q1-hour.innerHTML = "<option value=''>Hour</option>";
+    for (let i = 1; i <= 12; i++) {
+      q1-hour.innerHTML += `<option value="${i}">${i}</option>`;
+    }
 
-function check4(){
-let v=parseFloat(q4.value);
-if(!isNaN(v)&&Math.abs(v-6.1)<0.1){
-f4.innerHTML="<span class='correct'>6.1 inches </span>";
-reward(f4);correctCount++;winCheck();
-}else f4.innerHTML="<span class='wrong'>Nope</span>";
-}
+    q1-minute.innerHTML = "<option value=''>Minute</option>";
+    for (let i = 0; i < 60; i++) {
+      const v = i.toString().padStart(2, "0");
+      q1-minute.innerHTML += `<option value="${v}">${v}</option>`;
+    }
+  }
 
-function check5(){
-if(q5.value.trim().length>4){
-f5.innerHTML="<span class='correct'>You're so gay you fucking orphan i love you ♡</span>";
-reward(f5);correctCount++;winCheck();
-}else f5.innerHTML="<span class='wrong'>Write moreeee</span>";
-}
-}
+  fillOptions();
+
+  function burst(x, y) {
+    for (let i = 0; i < 14; i++) {
+      const h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "💖";
+      h.style.left = x + "px";
+      h.style.top = y + "px";
+      h.style.setProperty("--x", (Math.random() * 200 - 100) + "px");
+      h.style.setProperty("--y", (Math.random() * -200) + "px");
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1000);
+    }
+  }
+
+  function reward(el) {
+    ding.play();
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top);
+  }
+
+  function winCheck() {
+    if (correctCount === 5) {
+      setTimeout(() => location.href = "final.html", 1200);
+    }
+  }
+
+  function checkQ1() {
+    if (
+      q1-day.value == "8" &&
+      q1-month.value == "3" &&
+      q1-hour.value == "10" &&
+      q1-minute.value == "23" &&
+      q1-ampm.value == "AM"
+    ) {
+      f1.innerHTML = "<span class='correct'>8th March, 10:23 AM ♡</span>";
+      reward(f1);
+      correctCount++;
+      winCheck();
+    } else {
+      f1.innerHTML = "<span class='wrong'>Try again cutie</span>";
+    }
+  }
+
+  function checkQ2() {
+    if (q2-day.value == "11" && q2-month.value == "2") {
+      f2.innerHTML = "<span class='correct'>11th February ♡</span>";
+      reward(f2);
+      correctCount++;
+      winCheck();
+    } else {
+      f2.innerHTML = "<span class='wrong'>Nope</span>";
+    }
+  }
+
+  function checkQ3() {
+    if (q3.value.toLowerCase().includes("sponge")) {
+      f3.innerHTML = "<span class='correct'>Spongeboob 💕</span>";
+      reward(f3);
+      correctCount++;
+      winCheck();
+    } else {
+      f3.innerHTML = "<span class='wrong'>Wrong</span>";
+    }
+  }
+
+  function checkQ4() {
+    const v = parseFloat(q4.value);
+    if (!isNaN(v) && Math.abs(v - 6.1) < 0.1) {
+      f4.innerHTML = "<span class='correct'>6.1 inches </span>";
+      reward(f4);
+      correctCount++;
+      winCheck();
+    } else {
+      f4.innerHTML = "<span class='wrong'>Nope</span>";
+    }
+  }
+
+  function checkQ5() {
+    if (q5.value.trim().length > 4) {
+      f5.innerHTML = "<span class='correct'>You're so gay you fucking orphan I love you ♡</span>";
+      reward(f5);
+      correctCount++;
+      winCheck();
+    } else {
+      f5.innerHTML = "<span class='wrong'>Write moreeee</span>";
+    }
+  }
 </script>
 
 </body>
