@@ -4,165 +4,173 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our Love Story 💖</title>
-
 <style>
-body{
-margin:0;
-background:#0f0f14;
-font-family:system-ui;
-color:white;
-display:flex;
-align-items:center;
-justify-content:center;
-height:100vh;
-overflow:hidden;
+body {
+    margin: 0;
+    background: #0f0f14;
+    font-family: system-ui;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.slide{
-position:absolute;
-inset:0;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-opacity:0;
-pointer-events:none;
-transition:opacity 1s ease;
-text-align:center;
-padding:30px;
+.slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+    text-align: center;
+    padding: 30px;
 }
 
-.slide.active{
-opacity:1;
-pointer-events:auto;
+.slide.active {
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.slide img, .slide video{
-max-width:85%;
-max-height:65%;
-border-radius:26px;
-box-shadow:0 20px 60px rgba(255,105,180,.5);
-animation:fadeUp 1.2s ease;
+.slide img, .slide video {
+    max-width: 85%;
+    max-height: 65%;
+    border-radius: 26px;
+    box-shadow: 0 20px 60px rgba(255,105,180,.5);
+    animation: fadeUp 1.2s ease;
 }
 
-.text{
-font-size:2rem;
-margin-top:30px;
-animation:fadeUp 1.2s ease;
+.text {
+    font-size: 2rem;
+    margin-top: 30px;
+    animation: fadeUp 1.2s ease;
 }
 
-@keyframes fadeUp{
-from{opacity:0;transform:translateY(40px)}
-to{opacity:1;transform:translateY(0)}
+@keyframes fadeUp {
+    from {opacity:0; transform:translateY(40px);}
+    to {opacity:1; transform:translateY(0);}
 }
 
-.next-btn{
-margin-top:40px;
-padding:14px 50px;
-font-size:1.4rem;
-border:none;
-border-radius:999px;
-background:linear-gradient(135deg,#ff69b4,#ff4d94);
-color:white;
-cursor:pointer;
-box-shadow:0 6px 22px rgba(255,105,180,.6);
-transition:.3s;
+.next-btn {
+    margin-top: 40px;
+    padding: 14px 50px;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg,#ff69b4,#ff4d94);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 6px 22px rgba(255,105,180,.6);
+    transition: .3s;
 }
 
-.next-btn:hover{transform:scale(1.08)}
+.next-btn:hover {transform: scale(1.08);}
 
-.heart{
-position:fixed;
-font-size:18px;
-animation:float 6s linear infinite;
-pointer-events:none;
+.heart {
+    position: fixed;
+    font-size: 18px;
+    animation: float 6s linear infinite;
+    pointer-events: none;
 }
 
-@keyframes float{
-from{transform:translateY(110vh)}
-to{transform:translateY(-10vh)}
+@keyframes float {
+    from {transform: translateY(110vh);}
+    to {transform: translateY(-10vh);}
 }
 </style>
 </head>
-
 <body>
 
-<audio src="./music/love.mp3" autoplay loop></audio>
+<!-- Background music -->
+<audio src="music/love.mp3" autoplay loop></audio>
 
+<!-- Slide 1 -->
 <div class="slide active">
-<div class="text">
-A gay emotionally absent stupid dumb unloved orphan meets Sai  
-and boom — the earth explodes 💥  
-This is how it exploded 💖
-</div>
-<button class="next-btn" onclick="next()">Next 💕</button>
-</div>
-
-<div class="slide">
-<img src="./images/pic1.jpg">
-<div class="text">First appearance of my baby Mrinshu 🐭</div>
-<button class="next-btn" onclick="next()">Next 💗</button>
+    <div class="text">
+        A gay emotionally absent stupid dumb unloved orphan meets Sai<br>
+        and boom — the earth explodes 💥<br>
+        This is how it exploded 💖
+    </div>
+    <button class="next-btn" onclick="next()">Next 💕</button>
 </div>
 
+<!-- Slide 2 -->
 <div class="slide">
-<img src="./images/pic2.jpg">
-<div class="text">My tiny dummy being illegally cute</div>
-<button class="next-btn" onclick="next()">Next 💕</button>
+    <img src="images/pic1.jpg" alt="Pic1">
+    <div class="text">First appearance of my baby Mrinshu 🐭</div>
+    <button class="next-btn" onclick="next()">Next 💗</button>
 </div>
 
+<!-- Slide 3 -->
 <div class="slide">
-<video src="./videos/vid1.mp4" controls></video>
-<div class="text">POV: you ruined my life beautifully</div>
-<button class="next-btn" onclick="next()">Next 💖</button>
+    <img src="images/pic2.jpg" alt="Pic2">
+    <div class="text">My tiny dummy being illegally cute</div>
+    <button class="next-btn" onclick="next()">Next 💕</button>
 </div>
 
+<!-- Slide 4 -->
 <div class="slide">
-<img src="./images/pic3.jpg">
-<div class="text">My love looking hot AND adorable</div>
-<button class="next-btn" onclick="next()">Next 💗</button>
+    <video src="videos/vid1.mp4" controls></video>
+    <div class="text">POV: you ruined my life beautifully</div>
+    <button class="next-btn" onclick="next()">Next 💖</button>
 </div>
 
+<!-- Slide 5 -->
 <div class="slide">
-<img src="./images/pic4.jpg">
-<div class="text">My lil king sized bed 🛏️</div>
-<button class="next-btn" onclick="next()">Next 💕</button>
+    <img src="images/pic3.jpg" alt="Pic3">
+    <div class="text">My love looking hot AND adorable</div>
+    <button class="next-btn" onclick="next()">Next 💗</button>
 </div>
 
+<!-- Slide 6 -->
 <div class="slide">
-<video src="./videos/vid2.mp4" controls></video>
-<div class="text">I fell harder here you rat 😭</div>
-<button class="next-btn" onclick="next()">Next 💖</button>
+    <img src="images/pic4.jpg" alt="Pic4">
+    <div class="text">My lil king sized bed 🛏️</div>
+    <button class="next-btn" onclick="next()">Next 💕</button>
 </div>
 
+<!-- Slide 7 -->
 <div class="slide">
-<div class="text">
-I’d choose you in every universe.  
-Even when you’re a dumbass.  
-I love you forever my baby 💞
+    <video src="videos/vid2.mp4" controls></video>
+    <div class="text">I fell harder here you rat 😭</div>
+    <button class="next-btn" onclick="next()">Next 💖</button>
 </div>
+
+<!-- Slide 8 -->
+<div class="slide">
+    <div class="text">
+        I’d choose you in every universe.<br>
+        Even when you’re a dumbass.<br>
+        I love you forever my baby 💞
+    </div>
 </div>
 
 <script>
-let slides=document.querySelectorAll(".slide");
-let i=0;
+let slides = document.querySelectorAll(".slide");
+let i = 0;
 
-function next(){
-slides[i].classList.remove("active");
-i++;
-if(i<slides.length){
-slides[i].classList.add("active");
-}
+function next() {
+    slides[i].classList.remove("active");
+    i++;
+    if(i < slides.length) {
+        slides[i].classList.add("active");
+    }
 }
 
-setInterval(()=>{
-let h=document.createElement("div");
-h.className="heart";
-h.innerHTML=["💖","💕","💗","❤️"][Math.floor(Math.random()*4)];
-h.style.left=Math.random()*100+"vw";
-h.style.animationDuration=(Math.random()*4+4)+"s";
-document.body.appendChild(h);
-setTimeout(()=>h.remove(),7000);
-},600);
+// Floating hearts effect
+setInterval(() => {
+    let h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = ["💖","💕","💗","❤️"][Math.floor(Math.random()*4)];
+    h.style.left = Math.random() * 100 + "vw";
+    h.style.animationDuration = (Math.random() * 4 + 4) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+}, 600);
 </script>
 
 </body>
