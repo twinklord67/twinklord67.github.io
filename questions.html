@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our little questions ♡</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 30px 20px;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+      font-family: Arial, "Segoe UI", sans-serif;
+      color: #333;
+      text-align: center;
+      min-height: 100vh;
+    }
+
+    h1 {
+      color: #e91e63;
+      font-size: 2.8em;
+      margin: 20px 0 40px;
+    }
+
+    .question-box {
+      background: white;
+      padding: 28px;
+      margin: 35px auto;
+      max-width: 720px;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      text-align: left;
+      font-size: 1.28em;
+      line-height: 1.6;
+    }
+
+    .question-title {
+      color: #ff1493;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .input-area {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    select, input[type="text"], input[type="number"] {
+      padding: 10px 16px;
+      font-size: 1.1em;
+      border: 2px solid #ffb6c1;
+      border-radius: 10px;
+      background: #fff8fa;
+    }
+
+    button {
+      padding: 10px 24px;
+      font-size: 1.1em;
+      background: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #ff1493;
+    }
+
+    .feedback {
+      margin-top: 16px;
+      font-size: 1.2em;
+      min-height: 1.5em;
+    }
+
+    .correct {
+      color: #28a745;
+      font-weight: bold;
+    }
+
+    .wrong {
+      color: #dc3545;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 50px;
+      padding: 14px 36px;
+      background: #ffb6c1;
+      color: white;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1.25em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Our little questions ♡</h1>
+
+  <!-- Question 1 -->
+  <div class="question-box">
+    <div class="question-title">1. When did we first get married?</div>
+    <div class="input-area">
+      <select id="q1-day">
+        <option value="">Day</option>
+        <option value="8">8</option>
+      </select>
+      <select id="q1-month">
+        <option value="">Month</option>
+        <option value="3">March</option>
+      </select>
+      <select id="q1-year">
+        <option value="">Year</option>
+        <option value="2025">2025</option>
+      </select>
+      <select id="q1-hour">
+        <option value="">Hour</option>
+        <option value="10">10</option>
+      </select>
+      <select id="q1-minute">
+        <option value="">Minute</option>
+        <option value="23">23</option>
+      </select>
+      <select id="q1-ampm">
+        <option value="">AM/PM</option>
+        <option value="AM">AM</option>
+      </select>
+      <button onclick="checkQ1()">Check</button>
+    </div>
+    <div id="feedback1" class="feedback"></div>
+  </div>
+
+  <!-- Question 2 -->
+  <div class="question-box">
+    <div class="question-title">2. When did we start talking?</div>
+    <div class="input-area">
+      <select id="q2-day">
+        <option value="">Day</option>
+        <option value="11">11</option>
+      </select>
+      <select id="q2-month">
+        <option value="">Month</option>
+        <option value="2">February</option>
+      </select>
+      <select id="q2-year">
+        <option value="">Year</option>
+        <option value="2025">2025</option>
+      </select>
+      <button onclick="checkQ2()">Check</button>
+    </div>
+    <div id="feedback2" class="feedback"></div>
+  </div>
+
+  <!-- Question 3 -->
+  <div class="question-box">
+    <div class="question-title">3. What did I name your left boob?</div>
+    <div class="input-area">
+      <input type="text" id="q3-answer" placeholder="Type the name..." />
+      <button onclick="checkQ3()">Check</button>
+    </div>
+    <div id="feedback3" class="feedback"></div>
+  </div>
+
+  <!-- Question 4 -->
+  <div class="question-box">
+    <div class="question-title">4. How long is my pp?</div>
+    <div class="input-area">
+      <input type="number" id="q4-length" step="0.1" min="0" max="20" placeholder="Length in inches" />
+      <span style="font-size:1.2em;">inches</span>
+      <button onclick="checkQ4()">Check</button>
+    </div>
+    <div id="feedback4" class="feedback"></div>
+  </div>
+
+  <!-- Question 5 (open-ended) -->
+  <div class="question-box">
+    <div class="question-title">5. How bad do you want me :3 ?</div>
+    <div class="input-area" style="flex-direction: column; gap: 20px;">
+      <textarea id="q5-answer" rows="4" style="width: 90%; max-width: 500px; padding: 12px; font-size: 1.1em;" placeholder="Tell me everything..."></textarea>
+      <button onclick="showQ5()">Submit your answer ♡</button>
+    </div>
+    <div id="feedback5" class="feedback"></div>
+  </div>
+
+  <a href="index.html" class="back-btn">Back to start</a>
+
+  <script>
+    function checkQ1() {
+      const day = document.getElementById("q1-day").value;
+      const month = document.getElementById("q1-month").value;
+      const year = document.getElementById("q1-year").value;
+      const hour = document.getElementById("q1-hour").value;
+      const minute = document.getElementById("q1-minute").value;
+      const ampm = document.getElementById("q1-ampm").value;
+
+      const feedback = document.getElementById("feedback1");
+
+      if (day === "8" && month === "3" && year === "2025" &&
+          hour === "10" && minute === "23" && ampm === "AM") {
+        feedback.innerHTML = "<span class='correct'>Yesss! 8th March 2025, 10:23 AM ♡</span>";
+      } else {
+        feedback.innerHTML = "<span class='wrong'>Not quite... try again cutie</span>";
+      }
+    }
+
+    function checkQ2() {
+      const day = document.getElementById("q2-day").value;
+      const month = document.getElementById("q2-month").value;
+      const year = document.getElementById("q2-year").value;
+
+      const feedback = document.getElementById("feedback2");
+
+      if (day === "11" && month === "2" && year === "2025") {
+        feedback.innerHTML = "<span class='correct'>Perfect! 11th February 2025 ♡</span>";
+      } else {
+        feedback.innerHTML = "<span class='wrong'>Hmm... think again baby</span>";
+      }
+    }
+
+    function checkQ3() {
+      const answer = document.getElementById("q3-answer").value.trim().toLowerCase();
+      const feedback = document.getElementById("feedback3");
+
+      if (answer === "spongeboob") {
+        feedback.innerHTML = "<span class='correct'>Spongeboob!!! My favorite name ever 😂💕</span>";
+      } else {
+        feedback.innerHTML = "<span class='wrong'>Nope... it's cuter than that</span>";
+      }
+    }
+
+    function checkQ4() {
+      const length = parseFloat(document.getElementById("q4-length").value);
+      const feedback = document.getElementById("feedback4");
+
+      if (Math.abs(length - 6.1) < 0.05) {  // small tolerance for floating point
+        feedback.innerHTML = "<span class='correct'>6.1 inches... you know it so well 😏</span>";
+      } else {
+        feedback.innerHTML = "<span class='wrong'>Close... but not quite</span>";
+      }
+    }
+
+    function showQ5() {
+      const answer = document.getElementById("q5-answer").value.trim();
+      const feedback = document.getElementById("feedback5");
+
+      if (answer.length < 5) {
+        feedback.innerHTML = "<span class='wrong'>Tell me more... I wanna hear everything :3</span>";
+      } else {
+        feedback.innerHTML = "<span class='correct'>Awww... " + answer + "<br>I want you even more ♡♡♡</span>";
+      }
+    }
+  </script>
+
+</body>
+</html>
