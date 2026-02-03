@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Our little questions ♡</title>
-
 <style>
 body {
     margin: 0;
@@ -67,8 +66,8 @@ button {
     min-height: 1.6em;
 }
 
-.correct { color:#2ecc71 }
-.wrong { color:#e74c3c }
+.correct { color:#2ecc71; }
+.wrong { color:#e74c3c; }
 
 .heart {
     position: fixed;
@@ -78,20 +77,16 @@ button {
 }
 
 @keyframes burst {
-    to {
-        transform: translate(var(--x), var(--y)) scale(0);
-        opacity: 0;
-    }
+    to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
 }
 </style>
 </head>
-
 <body>
 
 <h1>Our little questions ♡</h1>
 
-<audio id="music" src="music/music.mp3" loop></audio>
-<audio id="ding" src="ding.mp3"></audio>
+<audio id="music" src="music/love.mp3" loop></audio>
+<audio id="ding" src="music/ding.mp3"></audio> <!-- make sure this exists in music folder -->
 
 <!-- Q1 -->
 <div class="question-box">
@@ -157,36 +152,27 @@ let correctCount = 0;
 
 const music = document.getElementById("music");
 music.volume = 0.25;
-music.play().catch(()=>{});
+music.play().catch(()=>{}); // avoids error if autoplay blocked
 
-const months = [
- "January","February","March","April","May","June",
- "July","August","September","October","November","December"
-];
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const q1Day = document.getElementById("q1-day");
 const q1Month = document.getElementById("q1-month");
 const q1Hour = document.getElementById("q1-hour");
 const q1Minute = document.getElementById("q1-minute");
 const q1Ampm = document.getElementById("q1-ampm");
-
 const q2Day = document.getElementById("q2-day");
 const q2Month = document.getElementById("q2-month");
 
 function fillOptions() {
-
     [q1Day, q2Day].forEach(sel => {
         sel.innerHTML = "<option value=''>Day</option>";
-        for(let i=1;i<=31;i++){
-            sel.innerHTML += `<option>${i}</option>`;
-        }
+        for(let i=1;i<=31;i++) sel.innerHTML += `<option>${i}</option>`;
     });
 
     [q1Month, q2Month].forEach(sel => {
         sel.innerHTML = "<option value=''>Month</option>";
-        months.forEach((m,i)=>{
-            sel.innerHTML += `<option value="${i+1}">${m}</option>`;
-        });
+        months.forEach((m,i)=> sel.innerHTML += `<option value="${i+1}">${m}</option>`);
     });
 
     q1Hour.innerHTML="<option value=''>Hour</option>";
@@ -200,7 +186,10 @@ function fillOptions() {
 }
 fillOptions();
 
+// Heart reward effect
 function burst(x,y){
+    const ding = document.getElementById("ding");
+    ding.play();
     for(let i=0;i<14;i++){
         const h=document.createElement("div");
         h.className="heart";
@@ -215,17 +204,17 @@ function burst(x,y){
 }
 
 function reward(el){
-    ding.play();
     const r=el.getBoundingClientRect();
     burst(r.left+r.width/2,r.top);
 }
 
 function winCheck(){
     if(correctCount===5){
-        setTimeout(()=>location.href="final.html",1200);
+        setTimeout(()=> location.href="final.html",1200);
     }
 }
 
+// Q1-Q5 functions
 function checkQ1(){
     if(q1Day.value=="8" && q1Month.value=="3" && q1Hour.value=="10" && q1Minute.value=="23" && q1Ampm.value=="AM"){
         f1.innerHTML="<span class='correct'>8th March 10:23 AM ♡</span>";
