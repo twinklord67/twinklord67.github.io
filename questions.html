@@ -62,12 +62,13 @@ button {
 
 .feedback {
     margin-top: 16px;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     min-height: 1.6em;
+    font-weight: bold;
 }
 
-.correct { color:#2ecc71; }
-.wrong { color:#e74c3c; }
+.correct { color: #2ecc71; }
+.wrong   { color: #e74c3c; }
 
 .heart {
     position: fixed;
@@ -86,7 +87,7 @@ button {
 <h1>Our little questions ♡</h1>
 
 <audio id="music" src="music/love.mp3" loop></audio>
-<audio id="ding" src="music/ding.mp3"></audio> <!-- make sure this exists in music folder -->
+<audio id="ding" src="music/ding.mp3"></audio>
 
 <!-- Q1 -->
 <div class="question-box">
@@ -152,7 +153,7 @@ let correctCount = 0;
 
 const music = document.getElementById("music");
 music.volume = 0.25;
-music.play().catch(()=>{}); // avoids error if autoplay blocked
+music.play().catch(()=>{}); 
 
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
@@ -172,7 +173,7 @@ function fillOptions() {
 
     [q1Month, q2Month].forEach(sel => {
         sel.innerHTML = "<option value=''>Month</option>";
-        months.forEach((m,i)=> sel.innerHTML += `<option value="${i+1}">${m}</option>`);
+        months.forEach((m,i)=> sel.innerHTML += `<option value="\( {i+1}"> \){m}</option>`);
     });
 
     q1Hour.innerHTML="<option value=''>Hour</option>";
@@ -186,7 +187,7 @@ function fillOptions() {
 }
 fillOptions();
 
-// Heart reward effect
+// Heart reward effect (kept for correct answers)
 function burst(x,y){
     const ding = document.getElementById("ding");
     ding.play();
@@ -214,41 +215,51 @@ function winCheck(){
     }
 }
 
-// Q1-Q5 functions
+// Updated check functions — minimal text only
 function checkQ1(){
     if(q1Day.value=="8" && q1Month.value=="3" && q1Hour.value=="10" && q1Minute.value=="23" && q1Ampm.value=="AM"){
-        f1.innerHTML="<span class='correct'>8th March 10:23 AM ♡</span>";
+        f1.innerHTML="<span class='correct'>yes</span>";
         reward(f1); correctCount++; winCheck();
-    } else f1.innerHTML="<span class='wrong'>Try again cutie</span>";
+    } else {
+        f1.innerHTML="<span class='wrong'>no dumbass</span>";
+    }
 }
 
 function checkQ2(){
     if(q2Day.value=="11" && q2Month.value=="2"){
-        f2.innerHTML="<span class='correct'>11th February ♡</span>";
+        f2.innerHTML="<span class='correct'>yes</span>";
         reward(f2); correctCount++; winCheck();
-    } else f2.innerHTML="<span class='wrong'>Nope</span>";
+    } else {
+        f2.innerHTML="<span class='wrong'>no dumbass</span>";
+    }
 }
 
 function checkQ3(){
     if(q3.value.toLowerCase().includes("sponge")){
-        f3.innerHTML="<span class='correct'>Spongeboob 💕</span>";
+        f3.innerHTML="<span class='correct'>yes</span>";
         reward(f3); correctCount++; winCheck();
-    } else f3.innerHTML="<span class='wrong'>Wrong</span>";
+    } else {
+        f3.innerHTML="<span class='wrong'>no dumbass</span>";
+    }
 }
 
 function checkQ4(){
     let v=parseFloat(q4.value);
     if(!isNaN(v)&&Math.abs(v-6.1)<0.1){
-        f4.innerHTML="<span class='correct'>6.1 inches 😌</span>";
+        f4.innerHTML="<span class='correct'>yes</span>";
         reward(f4); correctCount++; winCheck();
-    } else f4.innerHTML="<span class='wrong'>Nope</span>";
+    } else {
+        f4.innerHTML="<span class='wrong'>no dumbass</span>";
+    }
 }
 
 function checkQ5(){
     if(q5.value.trim().length>4){
-        f5.innerHTML="<span class='correct'>I love you my baby ♡</span>";
+        f5.innerHTML="<span class='correct'>yes</span>";
         reward(f5); correctCount++; winCheck();
-    } else f5.innerHTML="<span class='wrong'>Write moreeee</span>";
+    } else {
+        f5.innerHTML="<span class='wrong'>no dumbass</span>";
+    }
 }
 </script>
 
