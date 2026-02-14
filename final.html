@@ -1,177 +1,332 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our Love Story 💖</title>
-<style>
-body {
-    margin: 0;
-    background: #0f0f14;
-    font-family: system-ui;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>...final.html (the weird ending)</title>
+  <style>
+    :root {
+      --pink: #ff69b4;
+      --darkpink: #c71585;
+      --cyan: #00f0ff;
+      --darkcyan: #00b7c3;
+      --white: #ffffff;
+      --black: #000000;
+      --red: #ff0044;
+    }
 
-.slide {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 1s ease;
-    text-align: center;
-    padding: 30px;
-}
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body, html {
+      height: 100%;
+      font-family: system-ui, sans-serif;
+      overflow: hidden;
+      background: var(--white);
+      color: var(--black);
+      transition: background 1.2s ease;
+    }
 
-.slide.active {
-    opacity: 1;
-    pointer-events: auto;
-}
+    #license-popup,
+    #ready-popup,
+    #success-popup {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s;
+    }
 
-.slide img, .slide video {
-    max-width: 85%;
-    max-height: 65%;
-    border-radius: 26px;
-    box-shadow: 0 20px 60px rgba(255,105,180,.5);
-    animation: fadeUp 1.2s ease;
-}
+    .popup-content {
+      background: white;
+      padding: 3rem 4rem;
+      border-radius: 28px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+      text-align: center;
+      max-width: 90%;
+      transform: translateY(60px);
+      transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+    }
 
-.text {
-    font-size: 2rem;
-    margin-top: 30px;
-    animation: fadeUp 1.2s ease;
-}
+    #license-popup.active,
+    #ready-popup.active,
+    #success-popup.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
-@keyframes fadeUp {
-    from {opacity:0; transform:translateY(40px);}
-    to {opacity:1; transform:translateY(0);}
-}
+    #license-popup.active .popup-content,
+    #ready-popup.active .popup-content,
+    #success-popup.active .popup-content {
+      transform: translateY(0);
+    }
 
-.next-btn {
-    margin-top: 40px;
-    padding: 14px 50px;
-    font-size: 1.4rem;
-    border: none;
-    border-radius: 999px;
-    background: linear-gradient(135deg,#ff69b4,#ff4d94);
-    color: white;
-    cursor: pointer;
-    box-shadow: 0 6px 22px rgba(255,105,180,.6);
-    transition: .3s;
-}
+    h1 { font-size: 3.2rem; margin-bottom: 1.5rem; }
+    p  { font-size: 1.5rem; margin: 1rem 0; }
 
-.next-btn:hover {transform: scale(1.08);}
+    .btn {
+      margin: 1rem;
+      padding: 1rem 3rem;
+      font-size: 1.6rem;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
 
-.heart {
-    position: fixed;
-    font-size: 18px;
-    animation: float 6s linear infinite;
-    pointer-events: none;
-}
+    .yes { background: var(--pink); color: white; }
+    .no  { background: #555; color: white; }
 
-@keyframes float {
-    from {transform: translateY(110vh);}
-    to {transform: translateY(-10vh);}
-}
-</style>
+    .yes:hover { background: var(--darkpink); transform: scale(1.1); }
+    .no:hover  { background: #333; transform: scale(1.1); }
+
+    /* Minigame */
+    #game {
+      position: fixed;
+      inset: 0;
+      background: #111;
+      display: none;
+      overflow: hidden;
+    }
+
+    #plane {
+      position: absolute;
+      width: 80px;
+      height: 40px;
+      background: white;
+      clip-path: polygon(0% 50%, 100% 0%, 100% 100%, 0% 50%);
+      filter: drop-shadow(0 0 15px rgba(255,255,255,0.9));
+      transition: transform 0.08s linear;
+      will-change: transform;
+    }
+
+    #target {
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+      width: 220px;
+      height: 420px;
+      background: linear-gradient(to bottom, #444, #222);
+      box-shadow: 0 0 30px rgba(255,0,68,0.6);
+      border: 4px solid var(--red);
+      border-radius: 12px;
+    }
+
+    #target::before,
+    #target::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 48%;
+      background: inherit;
+      border: inherit;
+      border-radius: inherit;
+    }
+    #target::before { top: -2px; transform: translateY(-100%); }
+    #target::after  { bottom: -2px; transform: translateY(100%); }
+
+    #red-marker {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at center, transparent 30%, var(--red) 70%);
+      opacity: 0.7;
+      pointer-events: none;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse { 0%,100% { opacity:0.5 } 50% { opacity:0.9 } }
+
+    /* Explosion / crash */
+    #crash {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      color: #0f0;
+      font-family: 'Courier New', monospace;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      text-align: center;
+      z-index: 9999;
+    }
+
+    .angry {
+      font-size: 12rem;
+      margin-bottom: 1rem;
+      image-rendering: pixelated;
+      animation: shake 0.4s infinite;
+    }
+
+    @keyframes shake {
+      0%,100% { transform: translate(0,0); }
+      25% { transform: translate(-12px, 8px); }
+      75% { transform: translate(12px, -8px); }
+    }
+
+    .pixel-boom {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(
+        45deg,
+        #ff0044 0,
+        #ff0044 8px,
+        #000 8px,
+        #000 16px
+      );
+      opacity: 0;
+      animation: boom 1.8s forwards;
+    }
+
+    @keyframes boom {
+      0%   { opacity:0; transform:scale(0.2); }
+      30%  { opacity:1; transform:scale(1.4); }
+      100% { opacity:0; transform:scale(3); }
+    }
+  </style>
 </head>
 <body>
 
-<!-- Background music -->
-<audio src="music/love.mp3" autoplay loop></audio>
-
-<!-- Slide 1 -->
-<div class="slide active">
-    <div class="text">
-        A gay emotionally absent stupid dumb unloved orphan meets Sai<br>
-        and boom — the earth explodes 💥<br>
-        This is how it exploded 💖
+  <!-- Step 1: License popup -->
+  <div id="license-popup" class="active">
+    <div class="popup-content">
+      <h1>do you have a plane license?<br><small>(say yes)</small></h1>
+      <button class="btn yes" onclick="sayYes()">yes</button>
+      <button class="btn no"  onclick="sayNo()">no</button>
     </div>
-    <button class="next-btn" onclick="next()">Next 💕</button>
-</div>
+  </div>
 
-<!-- Slide 2 -->
-<div class="slide">
-    <img src="images/pic1.jpg" alt="Pic1">
-    <div class="text">First appearance of my baby Mrinshu 🐭</div>
-    <button class="next-btn" onclick="next()">Next 💗</button>
-</div>
-
-<!-- Slide 3 -->
-<div class="slide">
-    <img src="images/pic2.jpg" alt="Pic2">
-    <div class="text">My tiny dummy being illegally cute</div>
-    <button class="next-btn" onclick="next()">Next 💕</button>
-</div>
-
-<!-- Slide 4 -->
-<div class="slide">
-    <video src="videos/vid1.mp4" controls></video>
-    <div class="text">POV: you ruined my life beautifully</div>
-    <button class="next-btn" onclick="next()">Next 💖</button>
-</div>
-
-<!-- Slide 5 -->
-<div class="slide">
-    <img src="images/pic3.jpg" alt="Pic3">
-    <div class="text">My love looking hot AND adorable</div>
-    <button class="next-btn" onclick="next()">Next 💗</button>
-</div>
-
-<!-- Slide 6 -->
-<div class="slide">
-    <img src="images/pic4.jpg" alt="Pic4">
-    <div class="text">My lil king sized bed 🛏️</div>
-    <button class="next-btn" onclick="next()">Next 💕</button>
-</div>
-
-<!-- Slide 7 -->
-<div class="slide">
-    <video src="videos/vid2.mp4" controls></video>
-    <div class="text">I fell harder here you rat 😭</div>
-    <button class="next-btn" onclick="next()">Next 💖</button>
-</div>
-
-<!-- Slide 8 -->
-<div class="slide">
-    <div class="text">
-        I’d choose you in every universe.<br>
-        Even when you’re a dumbass.<br>
-        I love you forever my baby 💞
+  <!-- Step 2: Ready? popup -->
+  <div id="ready-popup">
+    <div class="popup-content" style="background:#000; color:#00f0ff; border:3px solid #00f0ff;">
+      <h1 style="color:#00f0ff;">ready?</h1>
+      <button class="btn yes" style="background:#00f0ff; color:#000;" onclick="startGame()">yes bro</button>
     </div>
-</div>
+  </div>
 
-<script>
-let slides = document.querySelectorAll(".slide");
-let i = 0;
+  <!-- Minigame screen -->
+  <div id="game">
+    <div id="target">
+      <div id="red-marker"></div>
+    </div>
+    <div id="plane"></div>
+  </div>
 
-function next() {
-    slides[i].classList.remove("active");
-    i++;
-    if(i < slides.length) {
-        slides[i].classList.add("active");
+  <!-- Success popup -->
+  <div id="success-popup">
+    <div class="popup-content" style="background:#000; color:#0f0; border:3px solid #0f0;">
+      <h1>you're gonna be<br>an amazing terrorist bro</h1>
+      <button class="btn yes" style="background:#0f0; color:#000; font-size:1.8rem;" onclick="showLove()">thanks</button>
+    </div>
+  </div>
+
+  <!-- Final love message (after "thanks") -->
+  <div id="love" style="display:none; height:100vh; background:#000; color:#ff69b4; display:flex; align-items:center; justify-content:center; font-size:3rem; text-align:center; padding:40px; flex-direction:column;">
+    <div style="font-size:5rem; margin-bottom:1rem;">💖</div>
+    <p>I’d choose you in every universe</p>
+    <p>even the ones where you're crashing planes into buildings</p>
+    <p style="font-size:2.2rem; margin:2rem 0;">my dumbass terrorist baby</p>
+    <p style="color:#ff1493; font-size:4rem;">I love you stupidly much forever 💞</p>
+  </div>
+
+  <!-- Crash screen -->
+  <div id="crash">
+    <div class="angry">😡💥</div>
+    <p>you weren't supposed to say no idiot</p>
+    <p style="font-size:1.6rem; margin-top:2rem;">SYSTEM32 HAS BEEN DELETED lol</p>
+    <div class="pixel-boom"></div>
+  </div>
+
+  <script>
+    // License step
+    function sayYes() {
+      document.getElementById('license-popup').classList.remove('active');
+      document.body.style.background = '#000';
+      setTimeout(() => {
+        document.getElementById('ready-popup').classList.add('active');
+      }, 1200);
     }
-}
 
-// Floating hearts effect
-setInterval(() => {
-    let h = document.createElement("div");
-    h.className = "heart";
-    h.innerHTML = ["💖","💕","💗","❤️"][Math.floor(Math.random()*4)];
-    h.style.left = Math.random() * 100 + "vw";
-    h.style.animationDuration = (Math.random() * 4 + 4) + "s";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 7000);
-}, 600);
-</script>
+    function sayNo() {
+      document.getElementById('license-popup').style.display = 'none';
+      const crash = document.getElementById('crash');
+      crash.style.display = 'flex';
+      // Fake crash sound / visual (no audio file needed)
+      setTimeout(() => {
+        document.body.style.background = '#0f0';
+        document.body.innerHTML += '<div style="position:fixed;inset:0;background:#000;opacity:0.6;z-index:9998;"></div>';
+      }, 1800);
+    }
 
+    // Game start
+    function startGame() {
+      document.getElementById('ready-popup').classList.remove('active');
+      document.getElementById('game').style.display = 'block';
+
+      const plane = document.getElementById('plane');
+      let x = window.innerWidth / 2 - 40;
+      let y = window.innerHeight - 100;
+      let vx = 0, vy = 0;
+      const speed = 4;
+
+      const keys = {};
+      window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
+      window.addEventListener('keyup',   e => keys[e.key.toLowerCase()] = false);
+
+      function update() {
+        if (keys['w'] || keys['arrowup'])    vy -= speed;
+        if (keys['s'] || keys['arrowdown'])  vy += speed;
+        if (keys['a'] || keys['arrowleft'])  vx -= speed;
+        if (keys['d'] || keys['arrowright']) vx += speed;
+
+        x += vx * 0.12;
+        y += vy * 0.12;
+
+        // Drag/friction
+        vx *= 0.96;
+        vy *= 0.96;
+
+        // Keep in bounds loosely
+        x = Math.max(0, Math.min(window.innerWidth - 80, x));
+        y = Math.max(0, Math.min(window.innerHeight - 40, y));
+
+        plane.style.transform = `translate(${x}px, \( {y}px) rotate( \){vx * 2}deg)`;
+
+        // Check collision with target
+        const targetRect = document.getElementById('target').getBoundingClientRect();
+        const planeRect  = plane.getBoundingClientRect();
+
+        if (
+          planeRect.left < targetRect.right &&
+          planeRect.right > targetRect.left &&
+          planeRect.top < targetRect.bottom &&
+          planeRect.bottom > targetRect.top
+        ) {
+          document.getElementById('game').style.display = 'none';
+          document.getElementById('success-popup').classList.add('active');
+        }
+
+        requestAnimationFrame(update);
+      }
+
+      update();
+    }
+
+    // Final love
+    function showLove() {
+      document.getElementById('success-popup').classList.remove('active');
+      document.getElementById('love').style.display = 'flex';
+    }
+
+    // Optional: make plane start slightly off-screen left
+    setTimeout(() => {
+      document.getElementById('plane').style.left = '-100px';
+    }, 300);
+  </script>
 </body>
 </html>
