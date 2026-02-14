@@ -1,267 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Our little questions ♡</title>
-<style>
-body {
-    margin: 0;
-    padding: 40px 20px;
-    background: linear-gradient(135deg, #fff5fb, #ffeef4, #fff0f8);
-    font-family: system-ui;
-    text-align: center;
-    color: #4a2c3b;
-}
-
-h1 {
-    color: #ff4d94;
-    font-size: 3rem;
-    margin-bottom: 50px;
-}
-
-.question-box {
-    background: white;
-    padding: 32px;
-    max-width: 720px;
-    margin: 40px auto;
-    border-radius: 26px;
-    box-shadow: 0 15px 40px rgba(255, 105, 180, 0.25);
-    transition: 0.3s;
-}
-
-.question-box:hover {
-    transform: translateY(-4px);
-}
-
-.input-area {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    justify-content: center;
-}
-
-select, input, textarea {
-    padding: 12px 16px;
-    border: 2px solid #ffcce6;
-    border-radius: 14px;
-    font-size: 1.05rem;
-    background: #fff8fc;
-}
-
-button {
-    padding: 12px 30px;
-    border: none;
-    border-radius: 999px;
-    background: linear-gradient(135deg,#ff69b4,#ff4d94);
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-
-.feedback {
-    margin-top: 16px;
-    font-size: 1.4rem;
-    min-height: 1.6em;
-    font-weight: bold;
-}
-
-.correct { color: #2ecc71; }
-.wrong   { color: #e74c3c; }
-
-.heart {
-    position: fixed;
-    font-size: 18px;
-    pointer-events: none;
-    animation: burst 1s ease-out forwards;
-}
-
-@keyframes burst {
-    to { transform: translate(var(--x), var(--y)) scale(0); opacity: 0; }
-}
-</style>
-</head>
-<body>
-
-<h1>Our little questions ♡</h1>
-
-<audio id="music" src="music/love.mp3" loop></audio>
-<audio id="ding" src="music/ding.mp3"></audio>
-
-<!-- Q1 -->
-<div class="question-box">
-    <div>1. When did we first get married?</div>
-    <div class="input-area">
-        <select id="q1-day"></select>
-        <select id="q1-month"></select>
-        <select id="q1-hour"></select>
-        <select id="q1-minute"></select>
-        <select id="q1-ampm">
-            <option value="">AM/PM</option>
-            <option>AM</option>
-            <option>PM</option>
-        </select>
-        <button onclick="checkQ1()">Check</button>
-    </div>
-    <div id="f1" class="feedback"></div>
-</div>
-
-<!-- Q2 -->
-<div class="question-box">
-    <div>2. When did we start talking?</div>
-    <div class="input-area">
-        <select id="q2-day"></select>
-        <select id="q2-month"></select>
-        <button onclick="checkQ2()">Check</button>
-    </div>
-    <div id="f2" class="feedback"></div>
-</div>
-
-<!-- Q3 -->
-<div class="question-box">
-    <div>3. What did I name your left boob?</div>
-    <div class="input-area">
-        <input id="q3">
-        <button onclick="checkQ3()">Check</button>
-    </div>
-    <div id="f3" class="feedback"></div>
-</div>
-
-<!-- Q4 -->
-<div class="question-box">
-    <div>4. How long is my pp?</div>
-    <div class="input-area">
-        <input type="number" id="q4" step="0.1">
-        <button onclick="checkQ4()">Check</button>
-    </div>
-    <div id="f4" class="feedback"></div>
-</div>
-
-<!-- Q5 -->
-<div class="question-box">
-    <div>5. How bad do you want me?</div>
-    <div class="input-area" style="flex-direction:column;">
-        <textarea id="q5" rows="4" style="width:90%"></textarea>
-        <button onclick="checkQ5()">Submit ♡</button>
-    </div>
-    <div id="f5" class="feedback"></div>
-</div>
-
 <script>
 let correctCount = 0;
 
 const music = document.getElementById("music");
 music.volume = 0.25;
-music.play().catch(()=>{}); 
+music.play().catch(() => {});
 
-const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+];
 
-const q1Day = document.getElementById("q1-day");
-const q1Month = document.getElementById("q1-month");
-const q1Hour = document.getElementById("q1-hour");
+const q1Day    = document.getElementById("q1-day");
+const q1Month  = document.getElementById("q1-month");
+const q1Hour   = document.getElementById("q1-hour");
 const q1Minute = document.getElementById("q1-minute");
-const q1Ampm = document.getElementById("q1-ampm");
-const q2Day = document.getElementById("q2-day");
-const q2Month = document.getElementById("q2-month");
+const q1Ampm   = document.getElementById("q1-ampm");
+const q2Day    = document.getElementById("q2-day");
+const q2Month  = document.getElementById("q2-month");
 
 function fillOptions() {
-    [q1Day, q2Day].forEach(sel => {
-        sel.innerHTML = "<option value=''>Day</option>";
-        for(let i=1;i<=31;i++) sel.innerHTML += `<option>${i}</option>`;
+    // Days
+    [q1Day, q2Day].forEach(function(sel) {
+        let html = '<option value="">Day</option>';
+        for (let i = 1; i <= 31; i++) {
+            html += '<option value="' + i + '">' + i + '</option>';
+        }
+        sel.innerHTML = html;
     });
 
-    [q1Month, q2Month].forEach(sel => {
-        sel.innerHTML = "<option value=''>Month</option>";
-        months.forEach((m,i)=> sel.innerHTML += `<option value="\( {i+1}"> \){m}</option>`);
+    // Months — fixed & safe version
+    [q1Month, q2Month].forEach(function(sel) {
+        let html = '<option value="">Month</option>';
+        for (let i = 0; i < months.length; i++) {
+            let value = i + 1;
+            let month = months[i];
+            html += '<option value="' + value + '">' + month + '</option>';
+        }
+        sel.innerHTML = html;
     });
 
-    q1Hour.innerHTML="<option value=''>Hour</option>";
-    for(let i=1;i<=12;i++) q1Hour.innerHTML+=`<option>${i}</option>`;
-
-    q1Minute.innerHTML="<option value=''>Minute</option>";
-    for(let i=0;i<60;i++){
-        let v=i.toString().padStart(2,"0");
-        q1Minute.innerHTML+=`<option>${v}</option>`;
+    // Hours
+    let hourHtml = '<option value="">Hour</option>';
+    for (let i = 1; i <= 12; i++) {
+        hourHtml += '<option value="' + i + '">' + i + '</option>';
     }
-}
-fillOptions();
+    q1Hour.innerHTML = hourHtml;
 
-// Heart reward effect (kept for correct answers)
-function burst(x,y){
+    // Minutes
+    let minHtml = '<option value="">Minute</option>';
+    for (let i = 0; i < 60; i++) {
+        let v = i.toString().padStart(2, '0');
+        minHtml += '<option value="' + v + '">' + v + '</option>';
+    }
+    q1Minute.innerHTML = minHtml;
+}
+
+// Run once DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fillOptions);
+} else {
+    fillOptions();
+}
+
+// Heart burst effect (unchanged)
+function burst(x, y) {
     const ding = document.getElementById("ding");
     ding.play();
-    for(let i=0;i<14;i++){
-        const h=document.createElement("div");
-        h.className="heart";
-        h.innerHTML="💖";
-        h.style.left=x+"px";
-        h.style.top=y+"px";
-        h.style.setProperty("--x",(Math.random()*200-100)+"px");
-        h.style.setProperty("--y",(Math.random()*-200)+"px");
+    for (let i = 0; i < 14; i++) {
+        const h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+        h.style.left = x + "px";
+        h.style.top = y + "px";
+        h.style.setProperty("--x", (Math.random() * 200 - 100) + "px");
+        h.style.setProperty("--y", (Math.random() * -200) + "px");
         document.body.appendChild(h);
-        setTimeout(()=>h.remove(),1000);
+        setTimeout(() => h.remove(), 1000);
     }
 }
 
-function reward(el){
-    const r=el.getBoundingClientRect();
-    burst(r.left+r.width/2,r.top);
+function reward(el) {
+    const r = el.getBoundingClientRect();
+    burst(r.left + r.width / 2, r.top);
 }
 
-function winCheck(){
-    if(correctCount===5){
-        setTimeout(()=> location.href="final.html",1200);
+function winCheck() {
+    if (correctCount === 5) {
+        setTimeout(() => location.href = "final.html", 1200);
     }
 }
 
-// Updated check functions — minimal text only
-function checkQ1(){
-    if(q1Day.value=="8" && q1Month.value=="3" && q1Hour.value=="10" && q1Minute.value=="23" && q1Ampm.value=="AM"){
-        f1.innerHTML="<span class='correct'>yes</span>";
-        reward(f1); correctCount++; winCheck();
+// Check functions (unchanged from your last version)
+function checkQ1() {
+    if (q1Day.value == "8" && q1Month.value == "3" && q1Hour.value == "10" && q1Minute.value == "23" && q1Ampm.value == "AM") {
+        f1.innerHTML = "<span class='correct'>yes</span>";
+        reward(f1);
+        correctCount++;
+        winCheck();
     } else {
-        f1.innerHTML="<span class='wrong'>no dumbass</span>";
+        f1.innerHTML = "<span class='wrong'>no dumbass</span>";
     }
 }
 
-function checkQ2(){
-    if(q2Day.value=="11" && q2Month.value=="2"){
-        f2.innerHTML="<span class='correct'>yes</span>";
-        reward(f2); correctCount++; winCheck();
+function checkQ2() {
+    if (q2Day.value == "11" && q2Month.value == "2") {
+        f2.innerHTML = "<span class='correct'>yes</span>";
+        reward(f2);
+        correctCount++;
+        winCheck();
     } else {
-        f2.innerHTML="<span class='wrong'>no dumbass</span>";
+        f2.innerHTML = "<span class='wrong'>no dumbass</span>";
     }
 }
 
-function checkQ3(){
-    if(q3.value.toLowerCase().includes("sponge")){
-        f3.innerHTML="<span class='correct'>yes</span>";
-        reward(f3); correctCount++; winCheck();
+function checkQ3() {
+    if (q3.value.toLowerCase().includes("sponge")) {
+        f3.innerHTML = "<span class='correct'>yes</span>";
+        reward(f3);
+        correctCount++;
+        winCheck();
     } else {
-        f3.innerHTML="<span class='wrong'>no dumbass</span>";
+        f3.innerHTML = "<span class='wrong'>no dumbass</span>";
     }
 }
 
-function checkQ4(){
-    let v=parseFloat(q4.value);
-    if(!isNaN(v)&&Math.abs(v-6.1)<0.1){
-        f4.innerHTML="<span class='correct'>yes</span>";
-        reward(f4); correctCount++; winCheck();
+function checkQ4() {
+    let v = parseFloat(q4.value);
+    if (!isNaN(v) && Math.abs(v - 6.1) < 0.1) {
+        f4.innerHTML = "<span class='correct'>yes</span>";
+        reward(f4);
+        correctCount++;
+        winCheck();
     } else {
-        f4.innerHTML="<span class='wrong'>no dumbass</span>";
+        f4.innerHTML = "<span class='wrong'>no dumbass</span>";
     }
 }
 
-function checkQ5(){
-    if(q5.value.trim().length>4){
-        f5.innerHTML="<span class='correct'>yes</span>";
-        reward(f5); correctCount++; winCheck();
+function checkQ5() {
+    if (q5.value.trim().length > 4) {
+        f5.innerHTML = "<span class='correct'>yes</span>";
+        reward(f5);
+        correctCount++;
+        winCheck();
     } else {
-        f5.innerHTML="<span class='wrong'>no dumbass</span>";
+        f5.innerHTML = "<span class='wrong'>no dumbass</span>";
     }
 }
 </script>
-
-</body>
-</html>
