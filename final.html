@@ -3,343 +3,266 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>...final.html (the weird ending)</title>
+  <title>final.html (glitch love bomb)</title>
   <style>
     :root {
-      --pink: #ff69b4;
-      --darkpink: #c71585;
-      --cyan: #00f0ff;
-      --darkcyan: #00b7c3;
-      --white: #ffffff;
-      --black: #000000;
-      --red: #ff0044;
-      --tower: #222;
+      --bg: #000;
+      --text: #ff69b4;
+      --accent: #ff1493;
+      --error: #0f0;
     }
 
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body, html {
-      height: 100%;
+    body {
+      margin: 0;
+      height: 100vh;
+      background: var(--bg);
+      color: var(--text);
       font-family: system-ui, sans-serif;
-      overflow: hidden;
-      background: var(--white);
-      color: var(--black);
-      transition: background 1.2s ease;
-    }
-
-    /* Popups (same as before) */
-    #license-popup,
-    #ready-popup,
-    #success-popup {
-      position: fixed;
-      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,0.4);
-      z-index: 100;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.6s;
+      overflow: hidden;
+      transition: all 2s;
     }
 
-    .popup-content {
-      background: white;
-      padding: 2.5rem 3.5rem;
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    #container {
       text-align: center;
       max-width: 90%;
-      transform: translateY(50px);
-      transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1);
+      padding: 20px;
+      position: relative;
+      z-index: 2;
     }
 
-    #license-popup.active,
-    #ready-popup.active,
-    #success-popup.active { opacity: 1; pointer-events: auto; }
-    #license-popup.active .popup-content,
-    #ready-popup.active .popup-content,
-    #success-popup.active .popup-content { transform: translateY(0); }
-
-    h1 { font-size: clamp(2.2rem, 8vw, 3.2rem); margin-bottom: 1.2rem; }
-    p  { font-size: 1.4rem; margin: 0.8rem 0; }
-
-    .btn {
-      margin: 0.8rem;
-      padding: 0.9rem 2.8rem;
-      font-size: 1.5rem;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.25s;
+    h1 {
+      font-size: clamp(3rem, 12vw, 7rem);
+      margin: 0.5em 0;
+      color: var(--text);
+      text-shadow: 0 0 20px var(--accent);
+      animation: glow 4s infinite alternate;
     }
 
-    .yes { background: var(--pink); color: white; }
-    .no  { background: #555; color: white; }
-    .yes:hover { background: var(--darkpink); transform: scale(1.08); }
-    .no:hover  { background: #333; transform: scale(1.08); }
-
-    /* Minigame */
-    #game {
-      position: fixed;
-      inset: 0;
-      background: #0a0a0a;
-      display: none;
-      overflow: hidden;
-      touch-action: none; /* better mobile control */
+    @keyframes glow {
+      from { text-shadow: 0 0 10px var(--accent); }
+      to   { text-shadow: 0 0 60px var(--accent), 0 0 100px #c71585; }
     }
 
-    #towers {
-      position: absolute;
-      left: 50%;
-      top: 35%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 20px;
-      z-index: 1;
+    .confession {
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      line-height: 1.5;
+      margin: 1.5em 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 1.5s ease-out;
     }
 
-    .tower {
-      width: 120px;
-      height: 380px;
-      background: var(--tower);
-      border: 3px solid var(--red);
-      border-radius: 8px;
-      box-shadow: 0 0 25px rgba(255,0,68,0.5);
+    .confession.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .glitch {
       position: relative;
     }
 
-    #marker {
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
       position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+    }
+
+    .glitch::before {
+      left: 2px;
+      text-shadow: -2px 0 #ff00c1;
+      clip: rect(0, 900px, 0, 0);
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
+
+    .glitch::after {
+      left: -2px;
+      text-shadow: 2px 0 #00ffff;
+      clip: rect(0, 900px, 0, 0);
+      animation: glitch-anim2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(20px, 9999px, 40px, 0); transform: skew(0.5deg); }
+      5% { clip: rect(50px, 9999px, 80px, 0); transform: skew(1deg); }
+      10% { clip: rect(10px, 9999px, 30px, 0); transform: skew(-0.8deg); }
+      /* more random clips for chaos */
+      100% { clip: rect(0, 9999px, 0, 0); transform: skew(0); }
+    }
+
+    @keyframes glitch-anim2 {
+      0% { clip: rect(30px, 9999px, 60px, 0); transform: skew(-0.3deg); }
+      /* random variations */
+      100% { clip: rect(0, 9999px, 0, 0); }
+    }
+
+    .btn {
+      padding: 14px 40px;
+      font-size: 1.8rem;
+      margin: 20px 10px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.4s;
+    }
+
+    #keep { background: var(--accent); color: white; }
+    #stop  { background: #444; color: white; }
+
+    #keep:hover { transform: scale(1.15); background: #ff007f; }
+    #stop:hover  { transform: scale(1.1); }
+
+    #hearts {
+      position: fixed;
       inset: 0;
-      background: radial-gradient(circle at center, transparent 20%, var(--red) 70%);
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2.5rem;
+      animation: rise 10s linear infinite;
       opacity: 0.6;
-      animation: pulse 3s infinite ease-in-out;
-      pointer-events: none;
     }
 
-    @keyframes pulse { 0%,100% { opacity: 0.5; } 50% { opacity: 0.85; } }
-
-    #plane {
-      position: absolute;
-      width: 90px;
-      height: 45px;
-      background: white;
-      clip-path: polygon(0% 40%, 100% 0%, 100% 100%, 20% 60%);
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.95));
-      z-index: 2;
-      will-change: transform;
+    @keyframes rise {
+      0% { transform: translateY(110vh) rotate(0deg); }
+      100% { transform: translateY(-20vh) rotate(1080deg); }
     }
 
-    #instructions {
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #aaa;
-      font-size: 1.3rem;
-      text-align: center;
-      background: rgba(0,0,0,0.5);
-      padding: 12px 24px;
-      border-radius: 12px;
-      pointer-events: none;
-      z-index: 3;
-      opacity: 1;
-      transition: opacity 1s;
-    }
-
-    /* Crash / success same as before */
     #crash {
       position: fixed;
       inset: 0;
       background: #000;
-      color: #0f0;
+      color: var(--error);
       font-family: 'Courier New', monospace;
       display: none;
       align-items: center;
       justify-content: center;
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       text-align: center;
-      z-index: 9999;
+      z-index: 10;
       flex-direction: column;
     }
 
-    .angry {
-      font-size: 10rem;
-      margin-bottom: 1rem;
-      animation: shake 0.5s infinite;
-    }
+    .blink { animation: blink 1s infinite; }
 
-    @keyframes shake {
-      0%,100% { transform: translate(0,0); }
-      20% { transform: translate(-10px, 6px); }
-      80% { transform: translate(10px, -6px); }
-    }
-
-    #love {
-      display: none;
-      height: 100vh;
-      background: #000;
-      color: var(--pink);
-      align-items: center;
-      justify-content: center;
-      font-size: 2.8rem;
-      text-align: center;
-      padding: 30px;
-      flex-direction: column;
-    }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
 <body>
 
-  <!-- License popup (unchanged) -->
-  <div id="license-popup" class="active">
-    <div class="popup-content">
-      <h1>do you have a plane license?<br><small>(say yes)</small></h1>
-      <button class="btn yes" onclick="sayYes()">yes</button>
-      <button class="btn no"  onclick="sayNo()">no</button>
+  <div id="hearts"></div>
+
+  <div id="container">
+    <h1>my baby rat 🐭</h1>
+
+    <div id="step1" class="confession visible">
+      <p>i was just a dumb unloved gay orphan</p>
+      <p>then you exploded everything 💥</p>
+    </div>
+
+    <div id="step2" class="confession">
+      <p class="glitch" data-text="now i can't stop thinking about you">now i can't stop thinking about you</p>
+    </div>
+
+    <div id="step3" class="confession">
+      <p class="glitch" data-text="even when you're being a terrorist dumbass">even when you're being a terrorist dumbass</p>
+    </div>
+
+    <div id="step4" class="confession">
+      <p>i'd choose you in every universe</p>
+      <p>even the ones where we blow shit up together</p>
+    </div>
+
+    <div id="buttons">
+      <button id="keep" class="btn" onclick="escalate()">keep going 💖</button>
+      <button id="stop" class="btn" onclick="fakeCrash()">stop this pls</button>
     </div>
   </div>
 
-  <!-- Ready popup (unchanged) -->
-  <div id="ready-popup">
-    <div class="popup-content" style="background:#000; color:#00f0ff; border:3px solid #00f0ff;">
-      <h1 style="color:#00f0ff;">ready?</h1>
-      <button class="btn yes" style="background:#00f0ff; color:#000;" onclick="startGame()">yes bro</button>
-    </div>
-  </div>
-
-  <!-- Game -->
-  <div id="game">
-    <div id="instructions">crash into the red spot<br>use WASD / arrows</div>
-    <div id="towers">
-      <div class="tower"><div id="marker"></div></div>
-      <div class="tower"><div id="marker"></div></div>
-    </div>
-    <div id="plane"></div>
-  </div>
-
-  <!-- Success -->
-  <div id="success-popup">
-    <div class="popup-content" style="background:#000; color:#0f0; border:3px solid #0f0;">
-      <h1>you're gonna be<br>an amazing terrorist bro</h1>
-      <button class="btn yes" style="background:#0f0; color:#000; font-size:1.8rem;" onclick="showLove()">thanks</button>
-    </div>
-  </div>
-
-  <!-- Love ending -->
-  <div id="love">
-    <div style="font-size:6rem; margin-bottom:1rem;">💖</div>
-    <p>I’d choose you in every universe</p>
-    <p>even the ones where you're flying planes into buildings</p>
-    <p style="font-size:2rem; margin:1.5rem 0;">my dumbass terrorist baby</p>
-    <p style="color:#ff1493; font-size:3.5rem;">I love you stupidly much forever 💞</p>
-  </div>
-
-  <!-- Crash -->
   <div id="crash">
-    <div class="angry">😡💥</div>
-    <p>you weren't supposed to say no idiot</p>
-    <p style="font-size:1.5rem; margin-top:1.5rem;">SYSTEM32 HAS BEEN DELETED lol</p>
+    <p class="blink">ERROR: LOVE OVERLOAD</p>
+    <p style="font-size:1.6rem; margin:1rem 0;">system can't handle how much i love you idiot</p>
+    <p style="color:#ff69b4; font-size:3rem; margin-top:2rem;">but anyway...</p>
   </div>
 
   <script>
-    function sayYes() {
-      document.getElementById('license-popup').classList.remove('active');
-      document.body.style.background = '#000';
-      setTimeout(() => {
-        document.getElementById('ready-popup').classList.add('active');
-      }, 1000);
-    }
+    let step = 1;
+    const steps = [null, 'step1', 'step2', 'step3', 'step4'];
 
-    function sayNo() {
-      document.getElementById('license-popup').style.display = 'none';
-      document.getElementById('crash').style.display = 'flex';
-      setTimeout(() => document.body.style.background = '#0f0', 1500);
-    }
-
-    function startGame() {
-      document.getElementById('ready-popup').classList.remove('active');
-      document.getElementById('game').style.display = 'block';
-
-      const plane = document.getElementById('plane');
-      let x = 60;                  // start left side
-      let y = window.innerHeight - 120;
-      let vx = 0, vy = 0;
-      const speed = 5;
-
-      const keys = {};
-      window.addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
-      window.addEventListener('keyup',   e => keys[e.key.toLowerCase()] = false);
-
-      // Touch support (basic swipe-like)
-      let touchStartX = 0, touchStartY = 0;
-      window.addEventListener('touchstart', e => {
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      });
-      window.addEventListener('touchmove', e => {
-        if (!touchStartX) return;
-        const dx = e.touches[0].clientX - touchStartX;
-        const dy = e.touches[0].clientY - touchStartY;
-        vx += dx * 0.08;
-        vy += dy * 0.08;
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-      });
-
-      function update() {
-        if (keys['w'] || keys['arrowup'])    vy -= speed;
-        if (keys['s'] || keys['arrowdown'])  vy += speed;
-        if (keys['a'] || keys['arrowleft'])  vx -= speed;
-        if (keys['d'] || keys['arrowright']) vx += speed;
-
-        x += vx;
-        y += vy;
-
-        vx *= 0.96;
-        vy *= 0.96;
-
-        x = Math.max(0, Math.min(window.innerWidth - 90, x));
-        y = Math.max(0, Math.min(window.innerHeight - 45, y));
-
-        plane.style.transform = `translate(${x}px, \( {y}px) rotate( \){vx * 1.8}deg)`;
-
-        // Collision check (center of plane roughly into any tower)
-        const towers = document.querySelectorAll('.tower');
-        let hit = false;
-        towers.forEach(tower => {
-          const tRect = tower.getBoundingClientRect();
-          const pRect = plane.getBoundingClientRect();
-          if (
-            pRect.left + pRect.width/3 < tRect.right &&
-            pRect.right - pRect.width/3 > tRect.left &&
-            pRect.top + pRect.height/3 < tRect.bottom &&
-            pRect.bottom - pRect.height/3 > tRect.top
-          ) {
-            hit = true;
-          }
-        });
-
-        if (hit) {
-          document.getElementById('game').style.display = 'none';
-          document.getElementById('success-popup').classList.add('active');
-        }
-
-        requestAnimationFrame(update);
+    function escalate() {
+      if (step >= 4) {
+        finish();
+        return;
       }
-
-      update();
-
-      // Fade out instructions
+      document.getElementById(steps[step]).classList.remove('visible');
+      step++;
       setTimeout(() => {
-        document.getElementById('instructions').style.opacity = '0';
-      }, 5000);
+        document.getElementById(steps[step]).classList.add('visible');
+        glitchPulse();
+      }, 800);
     }
 
-    function showLove() {
-      document.getElementById('success-popup').classList.remove('active');
-      document.getElementById('love').style.display = 'flex';
+    function fakeCrash() {
+      document.getElementById('container').style.opacity = '0';
+      document.getElementById('crash').style.display = 'flex';
+      glitchPulse(5);
+      setTimeout(finish, 3000); // no escape lol
     }
 
-    // Initial plane position
-    document.getElementById('plane').
+    function finish() {
+      document.body.style.background = 'linear-gradient(135deg, #000, #1a0033)';
+      document.getElementById('container').innerHTML = `
+        <h1 style="font-size:5rem;">💞 forever my baby 💞</h1>
+        <p style="font-size:2.2rem; margin:2em 0;">
+          i love you stupidly much<br>
+          even when the site glitches from it
+        </p>
+        <p style="color:#ff1493; font-size:3rem;">dumbass terrorist king sized bed enjoyer</p>
+      `;
+      startHearts(30);
+    }
+
+    function glitchPulse(count = 2) {
+      document.body.classList.add('glitch');
+      setTimeout(() => document.body.classList.remove('glitch'), count * 400);
+    }
+
+    function startHearts(num) {
+      const cont = document.getElementById('hearts');
+      for (let i = 0; i < num; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.innerHTML = ['💖','💕','💗','💞'][Math.floor(Math.random()*4)];
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = (Math.random() * 6 + 8) + 's';
+        h.style.animationDelay = Math.random() * 4 + 's';
+        cont.appendChild(h);
+        setTimeout(() => h.remove(), 15000);
+      }
+      // endless mode
+      setInterval(() => {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.innerHTML = '💖';
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = '12s';
+        cont.appendChild(h);
+        setTimeout(() => h.remove(), 15000);
+      }, 2000);
+    }
+
+    // auto start hearts lightly
+    startHearts(10);
+  </script>
+</body>
+</html>
