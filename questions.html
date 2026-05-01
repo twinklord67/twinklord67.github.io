@@ -197,7 +197,7 @@ function checkQ3() {
 function checkQ4() {
     let val = parseFloat(document.getElementById('q4').value);
     let f = document.getElementById('f4');
-    if (!isNaN(val) && Math.abs(val - 6.1) < 0.1) {
+    if (!isNaN(val) && Math.abs(val - 7.1) < 0.1) {
         f.innerHTML = '<span class="correct">yes</span>';
         correctCount++;
         if (correctCount === 5) setTimeout(() => location.href = "final.html", 800);
